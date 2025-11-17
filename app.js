@@ -45,7 +45,26 @@ const teamLogos = {
   "UCLA": "https://a.espncdn.com/i/teamlogos/ncaa/500/26.png",
   "Michigan": "https://a.espncdn.com/i/teamlogos/ncaa/500/130.png",
   "Notre Dame": "https://a.espncdn.com/i/teamlogos/ncaa/500/87.png",
-  "Pitt": "https://a.espncdn.com/i/teamlogos/ncaa/500/221.png"
+  "Pitt": "https://a.espncdn.com/i/teamlogos/ncaa/500/221.png",
+  // Missing teams added below
+  "Hofstra": "https://a.espncdn.com/i/teamlogos/ncaa/500/2275.png",
+  "Elon": "https://a.espncdn.com/i/teamlogos/ncaa/500/2210.png",
+  "UNC Greensboro": "https://a.espncdn.com/i/teamlogos/ncaa/500/2430.png",
+  "Cleveland State": "https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png",
+  "North Florida": "https://a.espncdn.com/i/teamlogos/ncaa/500/2454.png",
+  "Lafayette": "https://a.espncdn.com/i/teamlogos/ncaa/500/322.png",
+  "St. John's (NY)": "https://a.espncdn.com/i/teamlogos/ncaa/500/747.png",
+  "Florida Atlantic": "https://a.espncdn.com/i/teamlogos/ncaa/500/2226.png",
+  "Kansas City": "https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png",
+  "Lindenwood": "https://a.espncdn.com/i/teamlogos/ncaa/500/2336.png",
+  "Washington": "https://a.espncdn.com/i/teamlogos/ncaa/500/264.png",
+  "Kentucky": "https://a.espncdn.com/i/teamlogos/ncaa/500/96.png",
+  "Siena": "https://a.espncdn.com/i/teamlogos/ncaa/500/2561.png",
+  "Seton Hall": "https://a.espncdn.com/i/teamlogos/ncaa/500/2550.png",
+  "UC Irvine": "https://a.espncdn.com/i/teamlogos/ncaa/500/300.png",
+  "Grand Canyon": "https://a.espncdn.com/i/teamlogos/ncaa/500/2253.png",
+  "Western Michigan": "https://a.espncdn.com/i/teamlogos/ncaa/500/2711.png",
+  "Fairleigh Dickinson": "https://a.espncdn.com/i/teamlogos/ncaa/500/161.png"
 };
 
 // Placeholders
