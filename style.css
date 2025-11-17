@@ -1,74 +1,41 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f8f8f8;
-  padding: 20px;
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --accent:#1f6feb;
+  --muted:#6b7280;
 }
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:Inter,system-ui,Arial; background:var(--bg); color:#0f172a;
+  padding:18px;
 }
+header{text-align:center;margin-bottom:12px}
+h1{margin:0;font-size:20px}
+.sub{color:var(--muted);font-size:13px;margin-top:6px}
 
-.note {
-  text-align: center;
-  color: #555;
-  margin-bottom: 30px;
-  font-size: 14px;
-}
+.panel{background:var(--card); padding:12px; border-radius:10px; box-shadow:0 8px 26px rgba(7,12,20,0.06); margin-bottom:12px; border:1px solid #eef4ff}
 
-#bracket {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-}
+#controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
+#controls input{padding:8px 10px;border-radius:8px;border:1px solid #e6eef8; min-width:220px}
+#controls button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
 
-.round {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  min-width: 180px;
-}
+#bracketWrap{overflow:auto;padding:10px 6px}
+#bracket{display:flex;gap:14px;min-width:1000px}
+.round{min-width:220px;display:flex;flex-direction:column;gap:12px}
+.roundTitle{text-align:center;font-weight:700;color:var(--muted); margin-bottom:6px}
 
-.match {
-  background: white;
-  padding: 12px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+.match{background:#fbfeff;padding:8px;border-radius:8px;border:1px solid #eaf5ff; display:flex;flex-direction:column; gap:6px; min-height:64px}
+.team{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;cursor:pointer}
+.team:hover{background:#f3f9ff}
+.team.selected{background:#e6f3ff;font-weight:700;color:#0b4ea2}
 
-.team {
-  padding: 6px;
-  cursor: pointer;
-  border-radius: 4px;
-}
+#admin textarea{width:100%;min-height:80px;padding:8px;border-radius:8px;border:1px solid #e6eef8}
+.row{display:flex;gap:8px;margin-top:8px}
 
-.team:hover {
-  background: #eee;
-}
+.hint{font-size:13px;color:var(--muted);margin-top:8px}
+footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
 
-.selected {
-  background: #d0e7ff;
-  font-weight: bold;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
-  gap: 15px;
-}
-
-button {
-  padding: 10px 16px;
-  border: none;
-  background: #1976d2;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background: #145ba5;
+@media (max-width:880px){
+  #bracket{min-width:700px}
+  .round{min-width:170px}
 }
