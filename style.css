@@ -1,41 +1,51 @@
-:root{
-  --bg:#f6f8fb;
-  --card:#ffffff;
-  --accent:#1f6feb;
-  --muted:#6b7280;
+:root {
+  --bg:#f6f8fb; --card:#fff; --accent:#1f6feb; --muted:#6b7280; --accent-2:#0b5bd7;
 }
 *{box-sizing:border-box}
-body{
-  margin:0; font-family:Inter,system-ui,Arial; background:var(--bg); color:#0f172a;
-  padding:18px;
-}
+body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#0f172a;padding:18px}
 header{text-align:center;margin-bottom:12px}
 h1{margin:0;font-size:20px}
 .sub{color:var(--muted);font-size:13px;margin-top:6px}
 
-.panel{background:var(--card); padding:12px; border-radius:10px; box-shadow:0 8px 26px rgba(7,12,20,0.06); margin-bottom:12px; border:1px solid #eef4ff}
+.panel{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 26px rgba(7,12,20,0.06);margin-bottom:12px;border:1px solid #eef4ff}
 
+/* controls */
 #controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
-#controls input{padding:8px 10px;border-radius:8px;border:1px solid #e6eef8; min-width:220px}
+#controls input{padding:8px 10px;border-radius:8px;border:1px solid #e6eef8;min-width:160px}
 #controls button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
 
-#bracketWrap{overflow:auto;padding:10px 6px}
-#bracket{display:flex;gap:14px;min-width:1000px}
-.round{min-width:220px;display:flex;flex-direction:column;gap:12px}
-.roundTitle{text-align:center;font-weight:700;color:var(--muted); margin-bottom:6px}
+/* bracket layout */
+#bracketWrap{overflow:auto}
+#bracket{display:flex;gap:20px;padding-bottom:16px;min-width:900px;align-items:flex-start;transition:all .25s ease}
+.round{display:flex;flex-direction:column;gap:12px;min-width:160px;padding:6px}
+.round h2{font-size:15px;margin:0 0 4px 0;color:var(--accent)}
+.match{background:#f8faff;border-radius:8px;padding:8px;border:1px solid #e4ecf8;display:flex;flex-direction:column;gap:6px;min-height:64px;transition:transform .12s ease, box-shadow .12s ease}
+.match:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(10,30,80,0.06)}
+.teamBtn{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;border:1px solid #ccd8e8;background:white;cursor:pointer;text-align:left}
+.teamBtn:hover{background:#eef6ff}
+.teamBtn img.logo{width:22px;height:22px;border-radius:3px;object-fit:cover}
+.teamBtn .name{flex:1;font-size:13px}
+.teamBtn.picked{background:var(--accent);color:white;border-color:var(--accent)}
 
-.match{background:#fbfeff;padding:8px;border-radius:8px;border:1px solid #eaf5ff; display:flex;flex-direction:column; gap:6px; min-height:64px}
-.team{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;cursor:pointer}
-.team:hover{background:#f3f9ff}
-.team.selected{background:#e6f3ff;font-weight:700;color:#0b4ea2}
+.roundTitleSmall{font-size:12px;color:var(--muted);text-align:center;margin-bottom:6px}
 
-#admin textarea{width:100%;min-height:80px;padding:8px;border-radius:8px;border:1px solid #e6eef8}
-.row{display:flex;gap:8px;margin-top:8px}
+/* admin and textareas */
+#admin textarea,#admin input{width:100%;padding:8px;border-radius:8px;border:1px solid #e4e8ef;font-family:monospace}
+#admin .row{display:flex;gap:8px;margin-top:8px}
+#admin button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
 
-.hint{font-size:13px;color:var(--muted);margin-top:8px}
-footer{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
+/* leaderboard */
+#leaderboard{max-height:320px;overflow:auto}
+.leaderRow{display:flex;justify-content:space-between;padding:8px;border-bottom:1px dashed #eef3fb}
+.leaderRow .name{font-weight:600}
+.leaderRow .score{font-weight:700;color:var(--accent-2)}
 
-@media (max-width:880px){
+/* responsive / mobile collapse */
+@media (max-width:900px){
   #bracket{min-width:700px}
-  .round{min-width:170px}
+  .round{min-width:140px}
 }
+
+/* collapsed view: each round becomes accordion on small screens */
+.collapsed .round{min-width:100%;display:block;border-bottom:1px solid #eef5ff;padding-bottom:10px}
+.collapsed #bracket{flex-direction:column;gap:6px}
