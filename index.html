@@ -3,22 +3,25 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NCAA Men's Soccer — 48-team Bracket (Static)</title>
+  <title>NCAA Men's Soccer — 48-team Bracket</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
     <h1>NCAA Men's Soccer — 48-Team Bracket</h1>
-    <p class="sub">Click to pick winners. Use the Admin box to paste official teams when they're announced.</p>
+    <p class="sub">Click to pick winners. Admin can paste official teams/results. Players can submit to Google Sheets and view leaderboard.</p>
   </header>
 
   <main>
     <section id="controls" class="panel">
-      <input id="playerName" placeholder="Your name (optional)"/>
-      <button id="exportBtn">Export Bracket (JSON)</button>
-      <button id="importBtn">Import Bracket</button>
+      <input id="playerName" placeholder="Your name or nickname"/>
+      <input id="playerEmail" placeholder="Email (optional)"/>
+      <button id="exportBtn">Export (JSON)</button>
+      <button id="importBtn">Import</button>
       <input id="importFile" type="file" accept="application/json" style="display:none"/>
+      <button id="submitBtn">Submit Bracket</button>
       <button id="resetBtn">Reset Picks</button>
+      <button id="toggleViewBtn">Collapse Rounds (mobile)</button>
     </section>
 
     <section id="bracketWrap" class="panel">
@@ -26,20 +29,33 @@
     </section>
 
     <section id="admin" class="panel">
-      <h3>Admin — Replace placeholder teams (paste two arrays)</h3>
-      <p class="hint">Paste a JSON object like:<br/>
-        <code>{"round1": ["T1","T2",...32 items], "seeds": ["S1","S2",...16 items]}</code>
-      </p>
-      <textarea id="teamsJson" placeholder='Paste JSON with "round1" and "seeds" arrays' rows="4"></textarea>
+      <h3>Admin — Teams & Official Results</h3>
+      <p class="hint">Paste JSON like {"round1":[...32 names...],"seeds":[...16 names...]} to set teams. Or paste full rounds with winners to publish results.</p>
+      <textarea id="teamsJson" placeholder='{"round1":[...],"seeds":[...]}'></textarea>
       <div class="row">
         <button id="applyTeams">Apply Teams</button>
-        <button id="fillExample">Fill Example (placeholders)</button>
+        <button id="fillExample">Fill Example</button>
       </div>
-      <p class="hint">After applying official teams, players can pick and export their brackets.</p>
+
+      <p class="hint" style="margin-top:12px">To publish official match results (for scoring), paste JSON from export (it should contain rounds + winners) and click Publish Results:</p>
+      <textarea id="resultsJson" placeholder='Paste exported rounds JSON for official results'></textarea>
+      <div class="row">
+        <button id="publishResults">Publish Results (write to Sheets)</button>
+        <button id="clearResults">Clear Official Results</button>
+      </div>
+      <div class="hint" style="margin-top:8px">
+        NOTE: Publishing results requires Admin access to the Google Sheet. See instructions below.
+      </div>
+    </section>
+
+    <section id="leaderboardPanel" class="panel">
+      <h3>Leaderboard</h3>
+      <div id="leaderboard">Loading leaderboard…</div>
+      <div class="hint">Leaderboard updates after results are published. It polls the leaderboard endpoint every 30s.</div>
     </section>
 
     <footer>
-      <small>Static bracket app — no signup required. For a submission + scoring flow, I can add Google Sheets integration next.</small>
+      <small>To enable submissions & live leaderboard, deploy the included Google Apps Script and paste the Web App URLs into app.js (see instructions below).</small>
     </footer>
   </main>
 
