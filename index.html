@@ -1,23 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NCAA Men’s Soccer Bracket</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>NCAA Men's Soccer — 48-team Bracket (Static)</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-
 <body>
-  <h1>NCAA Men’s Soccer Tournament Bracket</h1>
+  <header>
+    <h1>NCAA Men's Soccer — 48-Team Bracket</h1>
+    <p class="sub">Click to pick winners. Use the Admin box to paste official teams when they're announced.</p>
+  </header>
 
-  <p class="note">Teams will auto-fill once the NCAA announces the official bracket.</p>
+  <main>
+    <section id="controls" class="panel">
+      <input id="playerName" placeholder="Your name (optional)"/>
+      <button id="exportBtn">Export Bracket (JSON)</button>
+      <button id="importBtn">Import Bracket</button>
+      <input id="importFile" type="file" accept="application/json" style="display:none"/>
+      <button id="resetBtn">Reset Picks</button>
+    </section>
 
-  <div id="bracket"></div>
+    <section id="bracketWrap" class="panel">
+      <div id="bracket"></div>
+    </section>
 
-  <div class="buttons">
-    <button id="export">Export My Bracket</button>
-    <button id="reset">Reset</button>
-  </div>
+    <section id="admin" class="panel">
+      <h3>Admin — Replace placeholder teams (paste two arrays)</h3>
+      <p class="hint">Paste a JSON object like:<br/>
+        <code>{"round1": ["T1","T2",...32 items], "seeds": ["S1","S2",...16 items]}</code>
+      </p>
+      <textarea id="teamsJson" placeholder='Paste JSON with "round1" and "seeds" arrays' rows="4"></textarea>
+      <div class="row">
+        <button id="applyTeams">Apply Teams</button>
+        <button id="fillExample">Fill Example (placeholders)</button>
+      </div>
+      <p class="hint">After applying official teams, players can pick and export their brackets.</p>
+    </section>
+
+    <footer>
+      <small>Static bracket app — no signup required. For a submission + scoring flow, I can add Google Sheets integration next.</small>
+    </footer>
+  </main>
 
   <script src="app.js"></script>
 </body>
