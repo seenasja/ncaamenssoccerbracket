@@ -445,25 +445,45 @@ clearResultsBtn && clearResultsBtn.addEventListener && clearResultsBtn.addEventL
 });
 
 // Submit bracket to Sheets
-submitBtn.addEventListener('click', async ()=>{
-  if (!SHEETS_WEBHOOK_URL.includes('https://')) { alert('Set the submission URL in app.js first.'); return; }
+submitBtn.addEventListener('click', ()=>{
+  if (!SHEETS_WEBHOOK_URL.includes('https://')) { 
+    alert('Set the submission URL in app.js first.'); 
+    return; 
+  }
+
   const player = playerNameInput.value || 'Anonymous';
   const email = playerEmailInput.value || '';
+  
+  // Prepare payload
   const payload = {
-    action:'submitBracket', 
-    player, 
-    email, 
-    rounds, 
+    action: 'submitBracket',
+    player,
+    email,
+    rounds,
     confidencePoints,
-    timestamp:new Date().toISOString()
+    timestamp: new Date().toISOString()
   };
-  try {
-    const res = await fetch(SHEETS_WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    const txt = await res.text();
-    if (res.ok) { alert('Submission saved. Thank you!'); fetchLeaderboard(); }
-    else alert('Submission failed: '+txt);
-  } catch(err){ alert('Error submitting: '+err.message); }
+  
+  // Convert to JSON and encode as URL parameter
+  const url = SHEETS_WEBHOOK_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
+
+  // Send GET request
+  fetch(url)
+    .then(res => res.json())
+    .then(response => {
+      if(response.result === 'success'){
+        alert('Submission saved. Thank you!');
+        fetchLeaderboard();
+      } else {
+        alert('Submission failed: ' + (response.message || 'Unknown error'));
+      }
+    })
+    .catch(err => {
+      console.error('Error submitting:', err);
+      alert('Error submitting. Check console.');
+    });
 });
+
 
 // Leaderboard fetch
 async function fetchLeaderboard(){
