@@ -8,8 +8,8 @@
 */
 
 // ------------------ CONFIG ------------------
-const SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxr6yEqqZNDkTRiyFBhxTTXT7kmO_Un_J5lXJj1o_68aUvbrzCPbu9Am6mNkzUtKzsDNQ/exec";
-const LEADERBOARD_URL = "https://script.google.com/macros/s/AKfycbxr6yEqqZNDkTRiyFBhxTTXT7kmO_Un_J5lXJj1o_68aUvbrzCPbu9Am6mNkzUtKzsDNQ/exec";
+const SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbx1unaY6FhZjdr04v39BnOCVhO8cGwkegL1iMN5vZjfeeV25p8qN2Y9saiYnEwYAZJ-qg/exec";
+const LEADERBOARD_URL = "https://script.google.com/macros/s/AKfycbx1unaY6FhZjdr04v39BnOCVhO8cGwkegL1iMN5vZjfeeV25p8qN2Y9saiYnEwYAZJ-qg/exec";
 const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 const CONFIDENCE_MODE = false; // Set to true to enable confidence points
 
