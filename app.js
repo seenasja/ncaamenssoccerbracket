@@ -5,8 +5,8 @@
 */
 
 // ------------------ CONFIG: paste your Apps Script URLs here ------------------
-const SHEETS_WEBHOOK_URL = "PASTE_YOUR_APPS_SCRIPT_POST_URL_HERE"; // POST endpoint to save submission or publish results
-const LEADERBOARD_URL = "PASTE_YOUR_APPS_SCRIPT_GET_URL_HERE"; // GET endpoint returns leaderboard JSON
+const SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxWrQwqE6T0cjY070lIE_de5eN94vn2TbcfKxjszyn8aHnW3oPvC8uyQRPzm165EHqvrw/exec"; // POST endpoint to save submission or publish results
+const LEADERBOARD_URL = "https://script.google.com/macros/s/AKfycbxWrQwqE6T0cjY070lIE_de5eN94vn2TbcfKxjszyn8aHnW3oPvC8uyQRPzm165EHqvrw/exec"; // GET endpoint returns leaderboard JSON
 // ---------------------------------------------------------------------------
 
 // Placeholders until admin pastes official teams
