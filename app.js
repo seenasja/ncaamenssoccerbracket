@@ -69,7 +69,7 @@ const playerEmailInput = document.getElementById('playerEmail');
 // --- Model ---
 let rounds = [];
 const round1Teams = Object.keys(teamLogos).slice(0,32);
-const seededTeams = Object.keys(teamLogos).slice(0,16);
+const seededTeams = Object.keys(teamLogos).slice(32); // FIXED: Get last 16 teams
 
 function getLogo(team){ return teamLogos[team]||null; }
 
@@ -106,8 +106,18 @@ function render(){
         const team = m['team'+side]; 
         if(team) btn.onclick=()=> pick(rIdx,mIdx,team);
         if(m.winner===team) btn.classList.add('picked');
-        const logoUrl = m['logo'+side]; if(logoUrl){ const img=document.createElement('img'); img.className='logo'; img.src=logoUrl; img.onerror=()=>img.style.display='none'; btn.appendChild(img);}
-        const nameDiv=document.createElement('div'); nameDiv.className='name'; nameDiv.innerText=team||'—'; btn.appendChild(nameDiv);
+        const logoUrl = m['logo'+side]; 
+        if(logoUrl){ 
+          const img=document.createElement('img'); 
+          img.className='logo'; 
+          img.src=logoUrl; 
+          img.onerror=()=>img.style.display='none'; 
+          btn.appendChild(img);
+        }
+        const nameDiv=document.createElement('div'); 
+        nameDiv.className='name'; 
+        nameDiv.innerText=team||'—'; 
+        btn.appendChild(nameDiv);
         match.appendChild(btn);
       });
       col.appendChild(match);
@@ -135,10 +145,35 @@ function autoSave(){ localStorage.setItem(AUTO_SAVE_KEY,JSON.stringify(rounds));
 function loadAutoSave(){ const saved=localStorage.getItem(AUTO_SAVE_KEY); if(saved) rounds=JSON.parse(saved); }
 
 // --- Buttons ---
-exportBtn.onclick=()=>{ const blob=new Blob([JSON.stringify(rounds,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='bracket.json'; a.click(); }
+exportBtn.onclick=()=>{ 
+  const blob=new Blob([JSON.stringify(rounds,null,2)],{type:'application/json'}); 
+  const url=URL.createObjectURL(blob); 
+  const a=document.createElement('a'); 
+  a.href=url; 
+  a.download='bracket.json'; 
+  a.click(); 
+}
+
 importBtn.onclick=()=>importFile.click();
-importFile.onchange=(e)=>{ const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload=ev=>{ rounds=JSON.parse(ev.target.result); render(); autoSave(); }; reader.readAsText(f);}
-resetBtn.onclick=()=>{ if(confirm('Reset bracket?')){ localStorage.removeItem(AUTO_SAVE_KEY); initRounds(); }}
+
+importFile.onchange=(e)=>{ 
+  const f=e.target.files[0]; 
+  if(!f) return; 
+  const reader=new FileReader(); 
+  reader.onload=ev=>{ 
+    rounds=JSON.parse(ev.target.result); 
+    render(); 
+    autoSave(); 
+  }; 
+  reader.readAsText(f);
+}
+
+resetBtn.onclick=()=>{ 
+  if(confirm('Reset bracket?')){ 
+    localStorage.removeItem(AUTO_SAVE_KEY); 
+    initRounds(); 
+  }
+}
 
 // --- Init ---
 initRounds();
