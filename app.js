@@ -4,7 +4,7 @@ const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 // Team logos
 const teamLogos = {
   // UNSEEDED TEAMS (32) - Play in First Round - EXACT ORDER FROM PDF
-  // LEFT SIDE (top to bottom)
+  // LEFT SIDE (top to bottom) - matches 1-8
   "Syracuse": "https://a.espncdn.com/i/teamlogos/ncaa/500/183.png",
   "Hofstra": "https://a.espncdn.com/i/teamlogos/ncaa/500/2275.png",
   "Clemson": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png",
@@ -21,7 +21,7 @@ const teamLogos = {
   "Lafayette": "https://a.espncdn.com/i/teamlogos/ncaa/500/322.png",
   "North Carolina": "https://a.espncdn.com/i/teamlogos/ncaa/500/153.png",
   "North Florida": "https://a.espncdn.com/i/teamlogos/ncaa/500/2454.png",
-  // RIGHT SIDE (top to bottom)
+  // RIGHT SIDE (top to bottom) - matches 9-16
   "Duke": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png",
   "FDU": "https://a.espncdn.com/i/teamlogos/ncaa/500/161.png",
   "Seton Hall": "https://a.espncdn.com/i/teamlogos/ncaa/500/180.png",
@@ -39,8 +39,8 @@ const teamLogos = {
   "Marshall": "https://a.espncdn.com/i/teamlogos/ncaa/500/276.png",
   "Cleveland St.": "https://a.espncdn.com/i/teamlogos/ncaa/500/325.png",
   
-  // SEEDED TEAMS (16) - Second Round - EXACT ORDER FROM PDF
-  // LEFT SIDE (top to bottom)
+  // SEEDED TEAMS (16) - Second Round - CORRECT ORDER
+  // LEFT SIDE (top to bottom) - matches 1-8
   "Vermont": "https://a.espncdn.com/i/teamlogos/ncaa/500/261.png",
   "Furman": "https://a.espncdn.com/i/teamlogos/ncaa/500/231.png",
   "San Diego": "https://a.espncdn.com/i/teamlogos/ncaa/500/301.png",
@@ -49,15 +49,15 @@ const teamLogos = {
   "Stanford": "https://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
   "UConn": "https://a.espncdn.com/i/teamlogos/ncaa/500/41.png",
   "Maryland": "https://a.espncdn.com/i/teamlogos/ncaa/500/120.png",
-  // RIGHT SIDE (top to bottom)
+  // RIGHT SIDE (top to bottom) - matches 9-16
   "Princeton": "https://a.espncdn.com/i/teamlogos/ncaa/500/163.png",
-  "Virginia": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png",
   "Bryant": "https://a.espncdn.com/i/teamlogos/ncaa/500/2066.png",
   "Indiana": "https://a.espncdn.com/i/teamlogos/ncaa/500/84.png",
+  "Akron": "https://a.espncdn.com/i/teamlogos/ncaa/500/2006.png",
+  "Virginia": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png",
   "Georgetown": "https://a.espncdn.com/i/teamlogos/ncaa/500/46.png",
   "High Point": "https://a.espncdn.com/i/teamlogos/ncaa/500/2294.png",
-  "NC State": "https://a.espncdn.com/i/teamlogos/ncaa/500/152.png",
-  "Akron": "https://a.espncdn.com/i/teamlogos/ncaa/500/2006.png"
+  "NC State": "https://a.espncdn.com/i/teamlogos/ncaa/500/152.png"
 };
 
 // --- DOM ---
