@@ -1,4 +1,4 @@
- // --- CONFIG ---
+// --- CONFIG ---
 const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 
 // Team logos
@@ -10,7 +10,7 @@ const teamLogos = {
   "Clemson": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png",
   "Western Mich.": "https://a.espncdn.com/i/teamlogos/ncaa/500/2711.png",
   "UCLA": "https://a.espncdn.com/i/teamlogos/ncaa/500/26.png",
-  "Grand Canyon": "https://a.espncdn.com/i/teamlogo/ncaa/500/2253.png",
+  "Grand Canyon": "https://a.espncdn.com/i/teamlogos/ncaa/500/2253.png",
   "Denver": "https://a.espncdn.com/i/teamlogos/ncaa/500/2172.png",
   "UC Irvine": "https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png",
   "Oregon St.": "https://a.espncdn.com/i/teamlogos/ncaa/500/204.png",
@@ -207,17 +207,6 @@ submitBtn.onclick = async () => {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit Bracket';
   }
-};
-  
-  // For now, just download it - you can add backend submission later
-  const blob = new Blob([JSON.stringify(submission, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `bracket_${name.replace(/\s+/g, '_')}_${Date.now()}.json`;
-  a.click();
-  
-  alert(`Bracket submitted successfully, ${name}!`);
 };
 
 exportBtn.onclick=()=>{ 
