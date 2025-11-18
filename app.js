@@ -1,4 +1,4 @@
-// --- CONFIG ---
+ // --- CONFIG ---
 const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 
 // Team logos
@@ -10,7 +10,7 @@ const teamLogos = {
   "Clemson": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png",
   "Western Mich.": "https://a.espncdn.com/i/teamlogos/ncaa/500/2711.png",
   "UCLA": "https://a.espncdn.com/i/teamlogos/ncaa/500/26.png",
-  "Grand Canyon": "https://a.espncdn.com/i/teamlogos/ncaa/500/2253.png",
+  "Grand Canyon": "https://a.espncdn.com/i/teamlogo/ncaa/500/2253.png",
   "Denver": "https://a.espncdn.com/i/teamlogos/ncaa/500/2172.png",
   "UC Irvine": "https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png",
   "Oregon St.": "https://a.espncdn.com/i/teamlogos/ncaa/500/204.png",
@@ -158,7 +158,7 @@ function autoSave(){ localStorage.setItem(AUTO_SAVE_KEY,JSON.stringify(rounds));
 function loadAutoSave(){ const saved=localStorage.getItem(AUTO_SAVE_KEY); if(saved) rounds=JSON.parse(saved); }
 
 // --- Buttons ---
-submitBtn.onclick = () => {
+submitBtn.onclick = async () => {
   const name = playerNameInput.value.trim();
   const email = playerEmailInput.value.trim();
   
@@ -179,6 +179,35 @@ submitBtn.onclick = () => {
     bracket: rounds,
     timestamp: new Date().toISOString()
   };
+  
+  // Disable button to prevent double-submission
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+  
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbx1unaY6FhZjdr04v39BnOCVhO8cGwkegL1iMN5vZjfeeV25p8qN2Y9saiYnEwYAZJ-qg/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submission)
+    });
+    
+    alert(`Bracket submitted successfully, ${name}! Good luck! 🏆`);
+    
+    // Optionally clear the form
+    playerNameInput.value = '';
+    playerEmailInput.value = '';
+    
+  } catch (error) {
+    console.error('Submission error:', error);
+    alert('There was an error submitting your bracket. Please try again or contact support.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Bracket';
+  }
+};
   
   // For now, just download it - you can add backend submission later
   const blob = new Blob([JSON.stringify(submission, null, 2)], {type: 'application/json'});
