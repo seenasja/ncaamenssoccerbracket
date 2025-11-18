@@ -3,8 +3,8 @@ const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 
 // Team logos
 const teamLogos = {
-  // UNSEEDED TEAMS (32) - Play in First Round
-  // Match pairings in order (every 2 teams play each other)
+  // UNSEEDED TEAMS (32) - Play in First Round - EXACT ORDER FROM PDF
+  // LEFT SIDE (top to bottom)
   "Syracuse": "https://a.espncdn.com/i/teamlogos/ncaa/500/183.png",
   "Hofstra": "https://a.espncdn.com/i/teamlogos/ncaa/500/2275.png",
   "Clemson": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png",
@@ -21,6 +21,7 @@ const teamLogos = {
   "Lafayette": "https://a.espncdn.com/i/teamlogos/ncaa/500/322.png",
   "North Carolina": "https://a.espncdn.com/i/teamlogos/ncaa/500/153.png",
   "North Florida": "https://a.espncdn.com/i/teamlogos/ncaa/500/2454.png",
+  // RIGHT SIDE (top to bottom)
   "Duke": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png",
   "FDU": "https://a.espncdn.com/i/teamlogos/ncaa/500/161.png",
   "Seton Hall": "https://a.espncdn.com/i/teamlogos/ncaa/500/180.png",
@@ -28,17 +29,18 @@ const teamLogos = {
   "Saint Louis": "https://a.espncdn.com/i/teamlogos/ncaa/500/139.png",
   "Kentucky": "https://a.espncdn.com/i/teamlogos/ncaa/500/96.png",
   "Michigan": "https://a.espncdn.com/i/teamlogos/ncaa/500/130.png",
+  "Notre Dame": "https://a.espncdn.com/i/teamlogos/ncaa/500/87.png",
   "Elon": "https://a.espncdn.com/i/teamlogos/ncaa/500/2210.png",
+  "UNC Greensboro": "https://a.espncdn.com/i/teamlogos/ncaa/500/2430.png",
   "Fla. Atlantic": "https://a.espncdn.com/i/teamlogos/ncaa/500/2226.png",
+  "UCF": "https://a.espncdn.com/i/teamlogos/ncaa/500/2116.png",
   "West Virginia": "https://a.espncdn.com/i/teamlogos/ncaa/500/277.png",
   "St. John's (NY)": "https://a.espncdn.com/i/teamlogos/ncaa/500/stjn.png",
-  "Notre Dame": "https://a.espncdn.com/i/teamlogos/ncaa/500/87.png",
-  "UNC Greensboro": "https://a.espncdn.com/i/teamlogos/ncaa/500/2430.png",
-  "UCF": "https://a.espncdn.com/i/teamlogos/ncaa/500/2116.png",
   "Marshall": "https://a.espncdn.com/i/teamlogos/ncaa/500/276.png",
   "Cleveland St.": "https://a.espncdn.com/i/teamlogos/ncaa/500/325.png",
   
-  // SEEDED TEAMS (16) - Get byes to Second Round - IN BRACKET ORDER
+  // SEEDED TEAMS (16) - Second Round - EXACT ORDER FROM PDF
+  // LEFT SIDE (top to bottom)
   "Vermont": "https://a.espncdn.com/i/teamlogos/ncaa/500/261.png",
   "Furman": "https://a.espncdn.com/i/teamlogos/ncaa/500/231.png",
   "San Diego": "https://a.espncdn.com/i/teamlogos/ncaa/500/301.png",
@@ -47,6 +49,7 @@ const teamLogos = {
   "Stanford": "https://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
   "UConn": "https://a.espncdn.com/i/teamlogos/ncaa/500/41.png",
   "Maryland": "https://a.espncdn.com/i/teamlogos/ncaa/500/120.png",
+  // RIGHT SIDE (top to bottom)
   "Princeton": "https://a.espncdn.com/i/teamlogos/ncaa/500/163.png",
   "Virginia": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png",
   "Bryant": "https://a.espncdn.com/i/teamlogos/ncaa/500/2066.png",
