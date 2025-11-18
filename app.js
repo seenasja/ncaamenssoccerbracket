@@ -4,7 +4,7 @@ const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 // Team logos
 const teamLogos = {
   // UNSEEDED TEAMS (32) - Play in First Round
-  // Match pairings in order
+  // Match pairings in order (every 2 teams play each other)
   "Syracuse": "https://a.espncdn.com/i/teamlogos/ncaa/500/183.png",
   "Hofstra": "https://a.espncdn.com/i/teamlogos/ncaa/500/2275.png",
   "Clemson": "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png",
@@ -22,8 +22,8 @@ const teamLogos = {
   "North Carolina": "https://a.espncdn.com/i/teamlogos/ncaa/500/153.png",
   "North Florida": "https://a.espncdn.com/i/teamlogos/ncaa/500/2454.png",
   "Duke": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png",
-  "Seton Hall": "https://a.espncdn.com/i/teamlogos/ncaa/500/180.png",
   "FDU": "https://a.espncdn.com/i/teamlogos/ncaa/500/161.png",
+  "Seton Hall": "https://a.espncdn.com/i/teamlogos/ncaa/500/180.png",
   "Siena": "https://a.espncdn.com/i/teamlogos/ncaa/500/2599.png",
   "Saint Louis": "https://a.espncdn.com/i/teamlogos/ncaa/500/139.png",
   "Kentucky": "https://a.espncdn.com/i/teamlogos/ncaa/500/96.png",
@@ -38,23 +38,23 @@ const teamLogos = {
   "Marshall": "https://a.espncdn.com/i/teamlogos/ncaa/500/276.png",
   "Cleveland St.": "https://a.espncdn.com/i/teamlogos/ncaa/500/325.png",
   
-// SEEDED TEAMS (16) - Get byes to Second Round - IN BRACKET ORDER
-"Vermont": "https://a.espncdn.com/i/teamlogos/ncaa/500/261.png",
-"Furman": "https://a.espncdn.com/i/teamlogos/ncaa/500/231.png",
-"San Diego": "https://a.espncdn.com/i/teamlogos/ncaa/500/301.png",
-"Portland": "https://a.espncdn.com/i/teamlogos/ncaa/500/2501.png",
-"SMU": "https://a.espncdn.com/i/teamlogos/ncaa/500/2567.png",
-"Stanford": "https://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
-"UConn": "https://a.espncdn.com/i/teamlogos/ncaa/500/41.png",
-"Maryland": "https://a.espncdn.com/i/teamlogos/ncaa/500/120.png",
-"Princeton": "https://a.espncdn.com/i/teamlogos/ncaa/500/163.png",
-"Virginia": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png",
-"Bryant": "https://a.espncdn.com/i/teamlogos/ncaa/500/2066.png",
-"Indiana": "https://a.espncdn.com/i/teamlogos/ncaa/500/84.png",
-"Georgetown": "https://a.espncdn.com/i/teamlogos/ncaa/500/46.png",
-"High Point": "https://a.espncdn.com/i/teamlogos/ncaa/500/2294.png",
-"NC State": "https://a.espncdn.com/i/teamlogos/ncaa/500/152.png",
-"Akron": "https://a.espncdn.com/i/teamlogos/ncaa/500/2006.png"
+  // SEEDED TEAMS (16) - Get byes to Second Round - IN BRACKET ORDER
+  "Vermont": "https://a.espncdn.com/i/teamlogos/ncaa/500/261.png",
+  "Furman": "https://a.espncdn.com/i/teamlogos/ncaa/500/231.png",
+  "San Diego": "https://a.espncdn.com/i/teamlogos/ncaa/500/301.png",
+  "Portland": "https://a.espncdn.com/i/teamlogos/ncaa/500/2501.png",
+  "SMU": "https://a.espncdn.com/i/teamlogos/ncaa/500/2567.png",
+  "Stanford": "https://a.espncdn.com/i/teamlogos/ncaa/500/24.png",
+  "UConn": "https://a.espncdn.com/i/teamlogos/ncaa/500/41.png",
+  "Maryland": "https://a.espncdn.com/i/teamlogos/ncaa/500/120.png",
+  "Princeton": "https://a.espncdn.com/i/teamlogos/ncaa/500/163.png",
+  "Virginia": "https://a.espncdn.com/i/teamlogos/ncaa/500/258.png",
+  "Bryant": "https://a.espncdn.com/i/teamlogos/ncaa/500/2066.png",
+  "Indiana": "https://a.espncdn.com/i/teamlogos/ncaa/500/84.png",
+  "Georgetown": "https://a.espncdn.com/i/teamlogos/ncaa/500/46.png",
+  "High Point": "https://a.espncdn.com/i/teamlogos/ncaa/500/2294.png",
+  "NC State": "https://a.espncdn.com/i/teamlogos/ncaa/500/152.png",
+  "Akron": "https://a.espncdn.com/i/teamlogos/ncaa/500/2006.png"
 };
 
 // --- DOM ---
@@ -65,6 +65,7 @@ const importFile = document.getElementById('importFile');
 const resetBtn = document.getElementById('resetBtn');
 const playerNameInput = document.getElementById('playerName');
 const playerEmailInput = document.getElementById('playerEmail');
+const submitBtn = document.getElementById('submitBtn');
 
 // --- Model ---
 let rounds = [];
@@ -138,7 +139,7 @@ function propagate(rIdx,mIdx,team){
   
   // Special handling for Round 1 → Round 2 (1:1 mapping)
   if(rIdx === 0) {
-    rounds[1][mIdx].teamB = team;  // Direct mapping, always teamB
+    rounds[1][mIdx].teamB = team;
     rounds[1][mIdx].logoB = getLogo(team);
   } 
   // Normal bracket propagation for Round 2 onwards
@@ -183,6 +184,37 @@ resetBtn.onclick=()=>{
     initRounds(); 
   }
 }
-
+submitBtn.onclick = () => {
+  const name = playerNameInput.value.trim();
+  const email = playerEmailInput.value.trim();
+  
+  if (!name) {
+    alert('Please enter your name before submitting!');
+    return;
+  }
+  
+  // Check if bracket is complete (champion selected)
+  if (!rounds[5][0].winner) {
+    alert('Please complete your bracket by selecting a champion!');
+    return;
+  }
+  
+  const submission = {
+    name: name,
+    email: email,
+    bracket: rounds,
+    timestamp: new Date().toISOString()
+  };
+  
+  // For now, just download it - you can add backend submission later
+  const blob = new Blob([JSON.stringify(submission, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `bracket_${name.replace(/\s+/g, '_')}_${Date.now()}.json`;
+  a.click();
+  
+  alert(`Bracket submitted successfully, ${name}!`);
+};
 // --- Init ---
 initRounds();
