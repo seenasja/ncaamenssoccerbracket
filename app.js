@@ -208,7 +208,6 @@ submitBtn.onclick = async () => {
     submitBtn.textContent = 'Submit Bracket';
   }
 };
-
 exportBtn.onclick=()=>{ 
   const blob=new Blob([JSON.stringify(rounds,null,2)],{type:'application/json'}); 
   const url=URL.createObjectURL(blob); 
