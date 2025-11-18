@@ -237,6 +237,42 @@ resetBtn.onclick=()=>{
     initRounds(); 
   }
 }
+// --- Leaderboard ---
+async function loadLeaderboard() {
+  const leaderboardDiv = document.getElementById('leaderboard');
+  
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbx1unaY6FhZjdr04v39BnOCVhO8cGwkegL1iMN5vZjfeeV25p8qN2Y9saiYnEwYAZJ-qg/exec');
+    const data = await response.json();
+    
+    if (data.leaderboard && data.leaderboard.length > 0) {
+      let html = '<h2>Leaderboard</h2><table><thead><tr><th>Rank</th><th>Name</th><th>Score</th><th>Champion Pick</th></tr></thead><tbody>';
+      
+      const top = data.leaderboard.slice(0, 10);
+      top.forEach(entry => {
+        html += `<tr>
+          <td>${entry.rank}</td>
+          <td>${entry.name}</td>
+          <td><strong>${entry.score}</strong></td>
+          <td>${entry.champion}</td>
+        </tr>`;
+      });
+      
+      html += '</tbody></table>';
+      html += '<p class="leaderboard-update">Last updated: ' + new Date().toLocaleTimeString() + '</p>';
+      leaderboardDiv.innerHTML = html;
+    } else {
+      leaderboardDiv.innerHTML = '<p>No scores yet. Waiting for tournament to begin!</p>';
+    }
+    
+  } catch (error) {
+    console.error('Error loading leaderboard:', error);
+    leaderboardDiv.innerHTML = '<p>Leaderboard will appear once tournament begins.</p>';
+  }
+}
 
+// Load leaderboard on page load and refresh every 60 seconds
+loadLeaderboard();
+setInterval(loadLeaderboard, 60000);
 // --- Init ---
 initRounds();
