@@ -1,60 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NCAA Men's Soccer Bracket</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCAA Men’s Soccer Bracket</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>NCAA Men's Soccer Bracket</h1>
-    <p class="sub">Pick your winners — share & submit to the leaderboard</p>
-  </header>
+<h1>NCAA Men’s Soccer Bracket</h1>
 
-  <main>
-    <section id="controls">
-      <input id="playerName" placeholder="Your name (optional)" />
-      <input id="playerEmail" placeholder="Your email (optional)" />
-      <div style="display:flex;gap:8px;width:100%;">
-        <button id="exportBtn">Export JSON</button>
-        <button id="importBtn" class="secondary">Import JSON</button>
-        <input id="importFile" type="file" accept="application/json" style="display:none" />
-        <button id="resetBtn" class="secondary">Reset Picks</button>
-      </div>
-    </section>
+<div id="controls">
+  <input type="text" id="playerName" placeholder="Your name">
+  <input type="email" id="playerEmail" placeholder="Email (optional)">
+  <button id="exportBtn">Export JSON</button>
+  <button id="importBtn">Import JSON</button>
+  <input type="file" id="importFile" style="display:none;">
+  <button id="resetBtn">Reset Bracket</button>
+</div>
 
-    <section id="bracketWrapper" class="bracket-wrapper">
-      <!-- rounds will be rendered into #bracket by script.js -->
-      <div id="bracket" class="bracket-container"></div>
-    </section>
+<div id="bracket"></div>
 
-    <section style="max-width:900px;margin:18px auto;">
-      <button id="submitBtn">Submit Bracket</button>
-    </section>
+<div id="leaderboard">
+  Loading leaderboard...
+</div>
 
-    <section id="adminPanel" style="max-width:900px;margin:18px auto;">
-      <h3>Admin / Teams</h3>
-      <textarea id="teamsJson" placeholder='{"round1":[...32 items...],"seeds":[...16 items...]}'></textarea>
-      <div style="display:flex;gap:8px;margin-top:8px;">
-        <button id="applyTeams">Apply Teams</button>
-        <button id="fillExample" class="secondary">Fill Example</button>
-        <button id="publishResults">Publish Results</button>
-        <button id="clearResults" class="secondary">Clear Results</button>
-      </div>
-      <p class="hint">Admin controls: paste official teams JSON in the exact ordering shown in the example.</p>
-    </section>
-
-    <section id="leaderboard" style="max-width:720px;margin:18px auto;">
-      <h2>Leaderboard</h2>
-      <div id="leaderboardRows">Loading...</div>
-    </section>
-  </main>
-
-  <footer>
-    <small>Built with ❤️ — paste Apps Script webhook URL into script.js</small>
-  </footer>
-
-  <script src="script.js" defer></script>
+<script src="app.js"></script>
 </body>
 </html>
