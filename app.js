@@ -69,7 +69,7 @@ const playerEmailInput = document.getElementById('playerEmail');
 // --- Model ---
 let rounds = [];
 const round1Teams = Object.keys(teamLogos).slice(0,32);
-const seededTeams = Object.keys(teamLogos).slice(32); // FIXED: Get last 16 teams
+const seededTeams = Object.keys(teamLogos).slice(32);
 
 function getLogo(team){ return teamLogos[team]||null; }
 
@@ -135,10 +135,19 @@ function pick(rIdx,mIdx,team){
 
 function propagate(rIdx,mIdx,team){
   if(rIdx===rounds.length-1) return;
-  const nextMatch=Math.floor(mIdx/2);
-  const slot=(mIdx%2===0)?'teamA':'teamB';
-  rounds[rIdx+1][nextMatch][slot]=team;
-  rounds[rIdx+1][nextMatch]['logo'+(slot==='teamA'?'A':'B')]=getLogo(team);
+  
+  // Special handling for Round 1 → Round 2 (1:1 mapping)
+  if(rIdx === 0) {
+    rounds[1][mIdx].teamB = team;  // Direct mapping, always teamB
+    rounds[1][mIdx].logoB = getLogo(team);
+  } 
+  // Normal bracket propagation for Round 2 onwards
+  else {
+    const nextMatch = Math.floor(mIdx/2);
+    const slot = (mIdx%2===0) ? 'teamA' : 'teamB';
+    rounds[rIdx+1][nextMatch][slot] = team;
+    rounds[rIdx+1][nextMatch]['logo'+(slot==='teamA'?'A':'B')] = getLogo(team);
+  }
 }
 
 function autoSave(){ localStorage.setItem(AUTO_SAVE_KEY,JSON.stringify(rounds)); }
