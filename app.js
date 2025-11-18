@@ -242,7 +242,7 @@ async function loadLeaderboard() {
   const leaderboardDiv = document.getElementById('leaderboard');
   
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbx1unaY6FhZjdr04v39BnOCVhO8cGwkegL1iMN5vZjfeeV25p8qN2Y9saiYnEwYAZJ-qg/exec');
+    const response = await fetch('https://script.google.com/macros/s/AKfycbz36IsZJtS3HYmZ4RZViEzwyu9PcHdjXc-ptbzrhXZcZtJJ5UBnlBQXfMSdxycdOkoj/exec');
     const data = await response.json();
     
     if (data.leaderboard && data.leaderboard.length > 0) {
