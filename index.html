@@ -1,64 +1,60 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>NCAA Men's Soccer — 48-team Bracket</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NCAA Men's Soccer Bracket</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1>NCAA Men's Soccer — 48-Team Bracket</h1>
-    <p class="sub">Click to pick winners. Admin can paste official teams/results. Players can submit to Google Sheets and view leaderboard.</p>
+    <h1>NCAA Men's Soccer Bracket</h1>
+    <p class="sub">Pick your winners — share & submit to the leaderboard</p>
   </header>
 
   <main>
-    <section id="controls" class="panel">
-      <input id="playerName" placeholder="Your name or nickname"/>
-      <input id="playerEmail" placeholder="Email (optional)"/>
-      <button id="exportBtn">Export (JSON)</button>
-      <button id="importBtn">Import</button>
-      <input id="importFile" type="file" accept="application/json" style="display:none"/>
+    <section id="controls">
+      <input id="playerName" placeholder="Your name (optional)" />
+      <input id="playerEmail" placeholder="Your email (optional)" />
+      <div style="display:flex;gap:8px;width:100%;">
+        <button id="exportBtn">Export JSON</button>
+        <button id="importBtn" class="secondary">Import JSON</button>
+        <input id="importFile" type="file" accept="application/json" style="display:none" />
+        <button id="resetBtn" class="secondary">Reset Picks</button>
+      </div>
+    </section>
+
+    <section id="bracketWrapper" class="bracket-wrapper">
+      <!-- rounds will be rendered into #bracket by script.js -->
+      <div id="bracket" class="bracket-container"></div>
+    </section>
+
+    <section style="max-width:900px;margin:18px auto;">
       <button id="submitBtn">Submit Bracket</button>
-      <button id="resetBtn">Reset Picks</button>
-      <button id="toggleViewBtn">Collapse Rounds (mobile)</button>
     </section>
 
-    <section id="bracketWrap" class="panel">
-      <div id="bracket"></div>
-    </section>
-
-    <section id="admin" class="panel">
-      <h3>Admin — Teams & Official Results</h3>
-      <p class="hint">Paste JSON like {"round1":[...32 names...],"seeds":[...16 names...]} to set teams. Or paste full rounds with winners to publish results.</p>
-      <textarea id="teamsJson" placeholder='{"round1":[...],"seeds":[...]}'></textarea>
-      <div class="row">
+    <section id="adminPanel" style="max-width:900px;margin:18px auto;">
+      <h3>Admin / Teams</h3>
+      <textarea id="teamsJson" placeholder='{"round1":[...32 items...],"seeds":[...16 items...]}'></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px;">
         <button id="applyTeams">Apply Teams</button>
-        <button id="fillExample">Fill Example</button>
+        <button id="fillExample" class="secondary">Fill Example</button>
+        <button id="publishResults">Publish Results</button>
+        <button id="clearResults" class="secondary">Clear Results</button>
       </div>
-
-      <p class="hint" style="margin-top:12px">To publish official match results (for scoring), paste JSON from export (it should contain rounds + winners) and click Publish Results:</p>
-      <textarea id="resultsJson" placeholder='Paste exported rounds JSON for official results'></textarea>
-      <div class="row">
-        <button id="publishResults">Publish Results (write to Sheets)</button>
-        <button id="clearResults">Clear Official Results</button>
-      </div>
-      <div class="hint" style="margin-top:8px">
-        NOTE: Publishing results requires Admin access to the Google Sheet. See instructions below.
-      </div>
+      <p class="hint">Admin controls: paste official teams JSON in the exact ordering shown in the example.</p>
     </section>
 
-    <section id="leaderboardPanel" class="panel">
-      <h3>Leaderboard</h3>
-      <div id="leaderboard">Loading leaderboard…</div>
-      <div class="hint">Leaderboard updates after results are published. It polls the leaderboard endpoint every 30s.</div>
+    <section id="leaderboard" style="max-width:720px;margin:18px auto;">
+      <h2>Leaderboard</h2>
+      <div id="leaderboardRows">Loading...</div>
     </section>
-
-    <footer>
-      <small>To enable submissions & live leaderboard, deploy the included Google Apps Script and paste the Web App URLs into app.js (see instructions below).</small>
-    </footer>
   </main>
 
-  <script src="app.js"></script>
+  <footer>
+    <small>Built with ❤️ — paste Apps Script webhook URL into script.js</small>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
