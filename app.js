@@ -3,7 +3,6 @@ const AUTO_SAVE_KEY = "ncaa_bracket_autosave";
 
 // Team logos
 const teamLogos = {
-const teamLogos = {
   // UNSEEDED TEAMS (32) - Play in First Round
   // Match pairings in order
   "Syracuse": "https://a.espncdn.com/i/teamlogos/ncaa/500/183.png",
