@@ -8,9 +8,7 @@
   --font: "Inter", system-ui, Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -20,13 +18,10 @@ body {
   padding: 16px;
 }
 
-h1, h2, h3 {
-  margin: 0 0 8px 0;
-}
+h1 { text-align: center; margin-bottom: 16px; }
 
 #bracket {
   display: flex;
-  flex-wrap: nowrap;
   overflow-x: auto;
   padding-bottom: 16px;
 }
@@ -66,9 +61,7 @@ h1, h2, h3 {
   background: white;
 }
 
-.teamBtn:hover {
-  background: var(--bg);
-}
+.teamBtn:hover { background: var(--bg); }
 
 .teamBtn.picked {
   background: var(--picked);
@@ -90,12 +83,7 @@ h1, h2, h3 {
   text-overflow: ellipsis;
 }
 
-#controls {
-  margin: 12px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+#controls { margin: 12px 0; display: flex; flex-wrap: wrap; gap: 8px; }
 
 button {
   padding: 6px 12px;
@@ -108,9 +96,7 @@ button {
   transition: all 0.2s ease;
 }
 
-button:hover {
-  background: #125ecc;
-}
+button:hover { background: #125ecc; }
 
 #leaderboard {
   margin-top: 16px;
@@ -127,23 +113,11 @@ button:hover {
   border-bottom: 1px solid #eee;
 }
 
-.leaderRow:last-child {
-  border-bottom: none;
-}
+.leaderRow:last-child { border-bottom: none; }
 
-/* Responsive adjustments */
+/* Mobile responsive */
 @media (max-width: 768px) {
-  :root {
-    --logo-size: 28px;
-  }
-  #bracket {
-    padding-bottom: 12px;
-  }
-  .round {
-    min-width: 180px;
-    margin-right: 12px;
-  }
-  .teamBtn {
-    padding: 4px;
-  }
+  :root { --logo-size: 28px; }
+  .round { min-width: 180px; margin-right: 12px; }
+  .teamBtn { padding: 4px; }
 }
