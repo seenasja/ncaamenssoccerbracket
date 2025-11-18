@@ -185,7 +185,7 @@ submitBtn.onclick = async () => {
   submitBtn.textContent = 'Submitting...';
   
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbz36IsZJtS3HYmZ4RZViEzwyu9PcHdjXc-ptbzrhXZcZtJJ5UBnlBQXfMSdxycdOkoj/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbw0xuLCOnbyaNkMBE5ZBLxiyqVhroE1O2tG5RgJkm8ylPr9nyR9gGAZiBK4OMTtuFTxwQ/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
@@ -242,7 +242,7 @@ async function loadLeaderboard() {
   const leaderboardDiv = document.getElementById('leaderboard');
   
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbz36IsZJtS3HYmZ4RZViEzwyu9PcHdjXc-ptbzrhXZcZtJJ5UBnlBQXfMSdxycdOkoj/exec');
+    const response = await fetch('https://script.google.com/macros/s/AKfycbw0xuLCOnbyaNkMBE5ZBLxiyqVhroE1O2tG5RgJkm8ylPr9nyR9gGAZiBK4OMTtuFTxwQ/exec');
     const data = await response.json();
     
     if (data.leaderboard && data.leaderboard.length > 0) {
