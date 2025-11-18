@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCAA Men’s Soccer Bracket</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NCAA Men's Soccer Bracket - Harker Eagles</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>NCAA Men’s Soccer Bracket</h1>
-
-<div id="controls">
-  <input type="text" id="playerName" placeholder="Your name">
-  <input type="email" id="playerEmail" placeholder="Email (optional)">
-  <button id="exportBtn">Export JSON</button>
-  <button id="importBtn">Import JSON</button>
-  <input type="file" id="importFile" style="display:none;">
-  <button id="resetBtn">Reset Bracket</button>
-</div>
-
-<div id="bracket"></div>
-
-<div id="leaderboard">
-  Loading leaderboard...
-</div>
-
-<script src="app.js"></script>
+  <h1>NCAA Men's Soccer Bracket - Harker Eagles</h1>
+  
+  <div id="controls">
+    <input type="text" id="playerName" placeholder="Your name">
+    <input type="email" id="playerEmail" placeholder="Email (optional)">
+    <button id="exportBtn">Export JSON</button>
+    <button id="importBtn">Import JSON</button>
+    <input type="file" id="importFile" accept=".json" style="display:none;">
+    <button id="resetBtn">Reset Bracket</button>
+  </div>
+  
+  <div id="bracket"></div>
+  
+  <div id="leaderboard">
+    Loading leaderboard...
+  </div>
+  
+  <script src="app.js"></script>
 </body>
 </html>
