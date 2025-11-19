@@ -167,6 +167,10 @@ submitBtn.onclick = async () => {
     return;
   }
   
+  if (!email) {
+    alert('Please enter your email before submitting!');
+    return;
+  }
   // Check if bracket is complete (champion selected)
   if (!rounds[5][0].winner) {
     alert('Please complete your bracket by selecting a champion!');
