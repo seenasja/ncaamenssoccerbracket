@@ -165,11 +165,13 @@ submitBtn.onclick = async () => {
   if (!name) {
     alert('Please enter your name before submitting!');
     return;
+  }
   
   if (!email) {
     alert('Please enter your email before submitting!');
     return;
   }
+  
   // Check if bracket is complete (champion selected)
   if (!rounds[5][0].winner) {
     alert('Please complete your bracket by selecting a champion!');
@@ -188,7 +190,7 @@ submitBtn.onclick = async () => {
   submitBtn.textContent = 'Submitting...';
   
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbxrr-ZX0vZ5XfFxkqWgvZfWJV_8oHNMjiG_pz3ZTkBURB2HF9LGyf8fSO7z2qouxm5x0g/exec', {
+    const response = await fetch('YOUR_DEPLOYMENT_URL_HERE', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
