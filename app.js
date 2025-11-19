@@ -190,7 +190,7 @@ submitBtn.onclick = async () => {
   submitBtn.textContent = 'Submitting...';
   
   try {
-    const response = await fetch('YOUR_DEPLOYMENT_URL_HERE', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxrr-ZX0vZ5XfFxkqWgvZfWJV_8oHNMjiG_pz3ZTkBURB2HF9LGyf8fSO7z2qouxm5x0g/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
