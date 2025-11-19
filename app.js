@@ -165,7 +165,6 @@ submitBtn.onclick = async () => {
   if (!name) {
     alert('Please enter your name before submitting!');
     return;
-  }
   
   if (!email) {
     alert('Please enter your email before submitting!');
