@@ -137,6 +137,30 @@ function pick(rIdx,mIdx,team){
   render();
 }
 
+// Custom mapping for Round 2 -> Round 3 to fix third round matchups
+// R2 indices: Vermont(0), Furman(1), San Diego(2), Portland(3), SMU(4), Stanford(5), UConn(6), Maryland(7),
+//             Princeton(8), Bryant(9), Indiana(10), Akron(11), Virginia(12), Georgetown(13), High Point(14), NC State(15)
+// Correct R3 matchups: Maryland/UConn, High Point/Georgetown, Portland/San Diego, Furman/Vermont,
+//                      Akron/Princeton, Indiana/Bryant, Virginia/NC State, Stanford/SMU
+const R2_TO_R3_MAPPING = {
+  7:  { r3Match: 0, slot: 'teamA' },  // Maryland -> R3-0
+  6:  { r3Match: 0, slot: 'teamB' },  // UConn -> R3-0
+  14: { r3Match: 1, slot: 'teamA' },  // High Point -> R3-1
+  13: { r3Match: 1, slot: 'teamB' },  // Georgetown -> R3-1
+  3:  { r3Match: 2, slot: 'teamA' },  // Portland -> R3-2
+  2:  { r3Match: 2, slot: 'teamB' },  // San Diego -> R3-2
+  1:  { r3Match: 3, slot: 'teamA' },  // Furman -> R3-3
+  0:  { r3Match: 3, slot: 'teamB' },  // Vermont -> R3-3
+  11: { r3Match: 4, slot: 'teamA' },  // Akron -> R3-4
+  8:  { r3Match: 4, slot: 'teamB' },  // Princeton -> R3-4
+  10: { r3Match: 5, slot: 'teamA' },  // Indiana -> R3-5
+  9:  { r3Match: 5, slot: 'teamB' },  // Bryant -> R3-5
+  12: { r3Match: 6, slot: 'teamA' },  // Virginia -> R3-6
+  15: { r3Match: 6, slot: 'teamB' },  // NC State -> R3-6
+  5:  { r3Match: 7, slot: 'teamA' },  // Stanford -> R3-7
+  4:  { r3Match: 7, slot: 'teamB' },  // SMU -> R3-7
+};
+
 function propagate(rIdx,mIdx,team){
   if(rIdx===rounds.length-1) return;
   
@@ -145,7 +169,15 @@ function propagate(rIdx,mIdx,team){
     rounds[1][mIdx].teamB = team;
     rounds[1][mIdx].logoB = getLogo(team);
   } 
-  // Normal bracket propagation for Round 2 onwards
+  // Custom mapping for Round 2 → Round 3 (fixed third round matchups)
+  else if(rIdx === 1) {
+    const mapping = R2_TO_R3_MAPPING[mIdx];
+    if(mapping) {
+      rounds[2][mapping.r3Match][mapping.slot] = team;
+      rounds[2][mapping.r3Match]['logo' + (mapping.slot === 'teamA' ? 'A' : 'B')] = getLogo(team);
+    }
+  }
+  // Normal bracket propagation for Round 3 onwards
   else {
     const nextMatch = Math.floor(mIdx/2);
     const slot = (mIdx%2===0) ? 'teamA' : 'teamB';
