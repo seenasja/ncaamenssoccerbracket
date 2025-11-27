@@ -60,6 +60,19 @@ const teamLogos = {
   "NC State": "https://a.espncdn.com/i/teamlogos/ncaa/500/152.png"
 };
 
+// --- CORRECT ROUND 3 MATCHUPS (based on actual 2025 NCAA bracket) ---
+// These are the actual R3 matchups with the teams that advanced
+const R3_MATCHUPS = [
+  { teamA: "Maryland", teamB: "UConn" },           // R3-0: Saturday Nov 29
+  { teamA: "High Point", teamB: "Georgetown" },   // R3-1: Saturday Nov 29
+  { teamA: "Portland", teamB: "Grand Canyon" },   // R3-2: Saturday Nov 29
+  { teamA: "Furman", teamB: "Hofstra" },          // R3-3: Sunday Nov 30
+  { teamA: "Akron", teamB: "Duke" },              // R3-4: Sunday Nov 30
+  { teamA: "Saint Louis", teamB: "Bryant" },      // R3-5: Sunday Nov 30
+  { teamA: "UNC Greensboro", teamB: "NC State" }, // R3-6: Sunday Nov 30
+  { teamA: "Stanford", teamB: "Washington" }      // R3-7: Sunday Nov 30
+];
+
 // --- DOM ---
 const bracketRoot = document.getElementById('bracket');
 const exportBtn = document.getElementById('exportBtn');
@@ -72,55 +85,63 @@ const submitBtn = document.getElementById('submitBtn');
 
 // --- Model ---
 let rounds = [];
-const round1Teams = Object.keys(teamLogos).slice(0,32);
-const seededTeams = Object.keys(teamLogos).slice(32);
 
 function getLogo(team){ return teamLogos[team]||null; }
 
-function buildMatches(arr){
-  const matches = [];
-  for(let i=0;i<arr.length;i+=2){
-    matches.push({teamA: arr[i]||null, teamB: arr[i+1]||null, winner:null, logoA:getLogo(arr[i]), logoB:getLogo(arr[i+1])});
-  }
-  return matches;
-}
-
 function initRounds(){
-  const r1 = buildMatches(round1Teams);
-  const r2 = seededTeams.map((team,i)=>({teamA:team,teamB:`Winner R1-${i+1}`,winner:null,logoA:getLogo(team),logoB:null}));
-  const r3 = Array.from({length:8},()=>({teamA:null,teamB:null,winner:null,logoA:null,logoB:null}));
+  // Build R3 with correct matchups
+  const r3 = R3_MATCHUPS.map(m => ({
+    teamA: m.teamA,
+    teamB: m.teamB,
+    winner: null,
+    logoA: getLogo(m.teamA),
+    logoB: getLogo(m.teamB)
+  }));
+  
   const qf = Array.from({length:4},()=>({teamA:null,teamB:null,winner:null,logoA:null,logoB:null}));
   const sf = Array.from({length:2},()=>({teamA:null,teamB:null,winner:null,logoA:null,logoB:null}));
   const f = [{teamA:null,teamB:null,winner:null,logoA:null,logoB:null}];
-  rounds = [r1,r2,r3,qf,sf,f];
+  
+  // rounds array: index 0=R3, 1=QF, 2=SF, 3=Final
+  rounds = [r3, qf, sf, f];
+  
+  // Load any saved picks
   loadAutoSave();
+  
   render();
 }
 
 function render(){
   bracketRoot.innerHTML = '';
-  const labels = ['First Round','Second Round','Third Round','Quarterfinals','Semifinals','Final'];
-  rounds.forEach((rMatches,rIdx)=>{
-    const col = document.createElement('div'); col.className='round';
-    const h2 = document.createElement('h2'); h2.innerText=labels[rIdx]; col.appendChild(h2);
-    rMatches.forEach((m,mIdx)=>{
-      const match = document.createElement('div'); match.className='match';
-      ['A','B'].forEach(side=>{
-        const btn = document.createElement('div'); btn.className='teamBtn';
-        const team = m['team'+side]; 
-        if(team) btn.onclick=()=> pick(rIdx,mIdx,team);
-        if(m.winner===team) btn.classList.add('picked');
-        const logoUrl = m['logo'+side]; 
+  const labels = ['Third Round', 'Quarterfinals', 'Semifinals', 'Final'];
+  
+  rounds.forEach((rMatches, rIdx) => {
+    const col = document.createElement('div'); 
+    col.className = 'round';
+    const h2 = document.createElement('h2'); 
+    h2.innerText = labels[rIdx]; 
+    col.appendChild(h2);
+    
+    rMatches.forEach((m, mIdx) => {
+      const match = document.createElement('div'); 
+      match.className = 'match';
+      ['A','B'].forEach(side => {
+        const btn = document.createElement('div'); 
+        btn.className = 'teamBtn';
+        const team = m['team' + side]; 
+        if(team) btn.onclick = () => pick(rIdx, mIdx, team);
+        if(m.winner === team) btn.classList.add('picked');
+        const logoUrl = m['logo' + side]; 
         if(logoUrl){ 
-          const img=document.createElement('img'); 
-          img.className='logo'; 
-          img.src=logoUrl; 
-          img.onerror=()=>img.style.display='none'; 
+          const img = document.createElement('img'); 
+          img.className = 'logo'; 
+          img.src = logoUrl; 
+          img.onerror = () => img.style.display = 'none'; 
           btn.appendChild(img);
         }
-        const nameDiv=document.createElement('div'); 
-        nameDiv.className='name'; 
-        nameDiv.innerText=team||'—'; 
+        const nameDiv = document.createElement('div'); 
+        nameDiv.className = 'name'; 
+        nameDiv.innerText = team || '—'; 
         btn.appendChild(nameDiv);
         match.appendChild(btn);
       });
@@ -130,64 +151,42 @@ function render(){
   });
 }
 
-function pick(rIdx,mIdx,team){
-  rounds[rIdx][mIdx].winner=team;
-  propagate(rIdx,mIdx,team);
+function pick(rIdx, mIdx, team){
+  rounds[rIdx][mIdx].winner = team;
+  propagate(rIdx, mIdx, team);
   autoSave();
   render();
 }
 
-// Custom mapping for Round 2 -> Round 3 to fix third round matchups
-// R2 indices: Vermont(0), Furman(1), San Diego(2), Portland(3), SMU(4), Stanford(5), UConn(6), Maryland(7),
-//             Princeton(8), Bryant(9), Indiana(10), Akron(11), Virginia(12), Georgetown(13), High Point(14), NC State(15)
-// Correct R3 matchups: Maryland/UConn, High Point/Georgetown, Portland/San Diego, Furman/Vermont,
-//                      Akron/Princeton, Indiana/Bryant, Virginia/NC State, Stanford/SMU
-const R2_TO_R3_MAPPING = {
-  7:  { r3Match: 0, slot: 'teamA' },  // Maryland -> R3-0
-  6:  { r3Match: 0, slot: 'teamB' },  // UConn -> R3-0
-  14: { r3Match: 1, slot: 'teamA' },  // High Point -> R3-1
-  13: { r3Match: 1, slot: 'teamB' },  // Georgetown -> R3-1
-  3:  { r3Match: 2, slot: 'teamA' },  // Portland -> R3-2
-  2:  { r3Match: 2, slot: 'teamB' },  // San Diego -> R3-2
-  1:  { r3Match: 3, slot: 'teamA' },  // Furman -> R3-3
-  0:  { r3Match: 3, slot: 'teamB' },  // Vermont -> R3-3
-  11: { r3Match: 4, slot: 'teamA' },  // Akron -> R3-4
-  8:  { r3Match: 4, slot: 'teamB' },  // Princeton -> R3-4
-  10: { r3Match: 5, slot: 'teamA' },  // Indiana -> R3-5
-  9:  { r3Match: 5, slot: 'teamB' },  // Bryant -> R3-5
-  12: { r3Match: 6, slot: 'teamA' },  // Virginia -> R3-6
-  15: { r3Match: 6, slot: 'teamB' },  // NC State -> R3-6
-  5:  { r3Match: 7, slot: 'teamA' },  // Stanford -> R3-7
-  4:  { r3Match: 7, slot: 'teamB' },  // SMU -> R3-7
-};
-
-function propagate(rIdx,mIdx,team){
-  if(rIdx===rounds.length-1) return;
+function propagate(rIdx, mIdx, team){
+  if(rIdx === rounds.length - 1) return;
   
-  // Special handling for Round 1 → Round 2 (1:1 mapping)
-  if(rIdx === 0) {
-    rounds[1][mIdx].teamB = team;
-    rounds[1][mIdx].logoB = getLogo(team);
-  } 
-  // Custom mapping for Round 2 → Round 3 (fixed third round matchups)
-  else if(rIdx === 1) {
-    const mapping = R2_TO_R3_MAPPING[mIdx];
-    if(mapping) {
-      rounds[2][mapping.r3Match][mapping.slot] = team;
-      rounds[2][mapping.r3Match]['logo' + (mapping.slot === 'teamA' ? 'A' : 'B')] = getLogo(team);
-    }
-  }
-  // Normal bracket propagation for Round 3 onwards
-  else {
-    const nextMatch = Math.floor(mIdx/2);
-    const slot = (mIdx%2===0) ? 'teamA' : 'teamB';
-    rounds[rIdx+1][nextMatch][slot] = team;
-    rounds[rIdx+1][nextMatch]['logo'+(slot==='teamA'?'A':'B')] = getLogo(team);
-  }
+  const nextMatch = Math.floor(mIdx / 2);
+  const slot = (mIdx % 2 === 0) ? 'teamA' : 'teamB';
+  rounds[rIdx + 1][nextMatch][slot] = team;
+  rounds[rIdx + 1][nextMatch]['logo' + (slot === 'teamA' ? 'A' : 'B')] = getLogo(team);
 }
 
-function autoSave(){ localStorage.setItem(AUTO_SAVE_KEY,JSON.stringify(rounds)); }
-function loadAutoSave(){ const saved=localStorage.getItem(AUTO_SAVE_KEY); if(saved) rounds=JSON.parse(saved); }
+function autoSave(){ 
+  localStorage.setItem(AUTO_SAVE_KEY + '_v2', JSON.stringify(rounds)); 
+}
+
+function loadAutoSave(){ 
+  const saved = localStorage.getItem(AUTO_SAVE_KEY + '_v2'); 
+  if(saved) {
+    const data = JSON.parse(saved);
+    // Restore saved picks, but keep R3 teams locked to actual matchups
+    if(data[0]) {
+      data[0].forEach((m, i) => {
+        if(m.winner) rounds[0][i].winner = m.winner;
+      });
+    }
+    // Restore QF, SF, Final completely
+    if(data[1]) rounds[1] = data[1];
+    if(data[2]) rounds[2] = data[2];
+    if(data[3]) rounds[3] = data[3];
+  }
+}
 
 // --- Buttons ---
 submitBtn.onclick = async () => {
@@ -205,7 +204,7 @@ submitBtn.onclick = async () => {
   }
   
   // Check if bracket is complete (champion selected)
-  if (!rounds[5][0].winner) {
+  if (!rounds[3][0].winner) {
     alert('Please complete your bracket by selecting a champion!');
     return;
   }
@@ -214,7 +213,8 @@ submitBtn.onclick = async () => {
     name: name,
     email: email,
     bracket: rounds,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    version: 2  // Mark this as a v2 submission (R3+ only)
   };
   
   // Disable button to prevent double-submission
@@ -245,35 +245,37 @@ submitBtn.onclick = async () => {
     submitBtn.textContent = 'Submit Bracket';
   }
 };
-exportBtn.onclick=()=>{ 
-  const blob=new Blob([JSON.stringify(rounds,null,2)],{type:'application/json'}); 
-  const url=URL.createObjectURL(blob); 
-  const a=document.createElement('a'); 
-  a.href=url; 
-  a.download='bracket.json'; 
+
+exportBtn.onclick = () => { 
+  const blob = new Blob([JSON.stringify(rounds, null, 2)], {type: 'application/json'}); 
+  const url = URL.createObjectURL(blob); 
+  const a = document.createElement('a'); 
+  a.href = url; 
+  a.download = 'bracket.json'; 
   a.click(); 
 }
 
-importBtn.onclick=()=>importFile.click();
+importBtn.onclick = () => importFile.click();
 
-importFile.onchange=(e)=>{ 
-  const f=e.target.files[0]; 
+importFile.onchange = (e) => { 
+  const f = e.target.files[0]; 
   if(!f) return; 
-  const reader=new FileReader(); 
-  reader.onload=ev=>{ 
-    rounds=JSON.parse(ev.target.result); 
+  const reader = new FileReader(); 
+  reader.onload = ev => { 
+    rounds = JSON.parse(ev.target.result); 
     render(); 
     autoSave(); 
   }; 
   reader.readAsText(f);
 }
 
-resetBtn.onclick=()=>{ 
-  if(confirm('Reset bracket?')){ 
-    localStorage.removeItem(AUTO_SAVE_KEY); 
+resetBtn.onclick = () => { 
+  if(confirm('Reset your bracket picks?')){ 
+    localStorage.removeItem(AUTO_SAVE_KEY + '_v2'); 
     initRounds(); 
   }
 }
+
 // --- Leaderboard ---
 async function loadLeaderboard() {
   const leaderboardDiv = document.getElementById('leaderboard');
@@ -311,5 +313,6 @@ async function loadLeaderboard() {
 // Load leaderboard on page load and refresh every 60 seconds
 loadLeaderboard();
 setInterval(loadLeaderboard, 60000);
+
 // --- Init ---
 initRounds();
